@@ -1,5 +1,5 @@
 export const BitcoinUnit = {
-  BTC: 'BTC',
+  BTC: 'BBLU',
   SATS: 'sats',
   LOCAL_CURRENCY: 'local_currency',
   MAX: 'MAX',

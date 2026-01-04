@@ -14,7 +14,7 @@ class Balance {
         
       default:
         let value = balance / Decimal(100_000_000)
-        completion("\(value) BTC") // Localize unit names as needed.
+        completion("\(value) BBLU") // Localize unit names as needed.
       }
     }
 
@@ -52,7 +52,7 @@ extension Decimal {
             }
         default:
             let value = self / Decimal(100_000_000)
-            return "\(value) BTC"
+            return "\(value) BBLU"
         }
     }
 }

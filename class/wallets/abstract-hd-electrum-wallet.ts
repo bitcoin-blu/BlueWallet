@@ -12,6 +12,7 @@ import { ECPairFactory, ECPairInterface } from 'ecpair';
 
 import * as BlueElectrum from '../../blue_modules/BlueElectrum';
 import { ElectrumHistory } from '../../blue_modules/BlueElectrum';
+import { bbluNetwork } from '../../blue_modules/bblu-network';
 import ecc from '../../blue_modules/noble_ecc';
 import { hexToUint8Array, concatUint8Arrays, uint8ArrayToHex } from '../../blue_modules/uint8array-extras';
 import { randomBytes } from '../rng';
@@ -1340,7 +1341,7 @@ export class AbstractHDElectrumWallet extends AbstractHDWallet {
     if (!pubkey || !path) {
       throw new Error('Internal error: pubkey or path are invalid');
     }
-    const p2wpkh = bitcoin.payments.p2wpkh({ pubkey });
+    const p2wpkh = bitcoin.payments.p2wpkh({ pubkey, network: bbluNetwork });
     if (!p2wpkh.output) {
       throw new Error('Internal error: could not create p2wpkh output during _addPsbtInput');
     }
@@ -1395,6 +1396,7 @@ export class AbstractHDElectrumWallet extends AbstractHDWallet {
   _nodeToBech32SegwitAddress(hdNode: BIP32Interface): string {
     const { address } = bitcoin.payments.p2wpkh({
       pubkey: hdNode.publicKey,
+      network: bbluNetwork,
     });
 
     if (!address) {
@@ -1407,6 +1409,7 @@ export class AbstractHDElectrumWallet extends AbstractHDWallet {
   _nodeToLegacyAddress(hdNode: BIP32Interface): string {
     const { address } = bitcoin.payments.p2pkh({
       pubkey: hdNode.publicKey,
+      network: bbluNetwork,
     });
 
     if (!address) {
@@ -1421,7 +1424,8 @@ export class AbstractHDElectrumWallet extends AbstractHDWallet {
    */
   _nodeToP2shSegwitAddress(hdNode: BIP32Interface): string {
     const { address } = bitcoin.payments.p2sh({
-      redeem: bitcoin.payments.p2wpkh({ pubkey: hdNode.publicKey }),
+      redeem: bitcoin.payments.p2wpkh({ pubkey: hdNode.publicKey, network: bbluNetwork }),
+      network: bbluNetwork,
     });
 
     if (!address) {

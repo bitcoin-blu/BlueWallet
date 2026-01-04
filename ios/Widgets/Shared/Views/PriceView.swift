@@ -62,7 +62,7 @@ struct PriceView: View {
     let priceChangePercentage = formattedPriceChangePercentage(currentRate: entry.currentMarketData?.rate, previousRate: entry.previousMarketData?.rate)
     
     return VStack(alignment: .center, spacing: 4) {
-      Text("BTC")
+      Text("BBLU")
         .font(.caption)
         .minimumScaleFactor(0.1)
       Text(priceString)

@@ -215,7 +215,7 @@ export default class SelfTest extends Component {
 
       l = new TaprootWallet();
       l.setSecret('L4PKRVk1Peaar5WuH5LiKfkTygWtFfGrFeH2g2t3YVVqiwpJjMoF');
-      if (l.getAddress() !== 'bc1pm6lqlel3qxefsx0v39nshtghasvvp6ghn3e5hd5q280j5m9h7csqrkzssu') {
+      if (l.getAddress() !== 'bb1px5ca9ng5muwrlrkf9x0dgtm0gt0scrpll7y4e9dp82xxdyf89mqssgmzqy') {
         throw new Error('failed to generate Taproot address from WIF');
       }
 
@@ -225,12 +225,12 @@ export default class SelfTest extends Component {
         [
           {
             value: 10000,
-            address: 'bc1pm6lqlel3qxefsx0v39nshtghasvvp6ghn3e5hd5q280j5m9h7csqrkzssu',
+            address: 'bb1px5ca9ng5muwrlrkf9x0dgtm0gt0scrpll7y4e9dp82xxdyf89mqssgmzqy',
             txid: '4dc4c9a03dd7005310a313c5ef1754e5e53888d587073f01a5a662501c12ac3b',
             vout: 0,
           },
         ],
-        [{ address: '13HaCAB4jf7FYSZexJxoczyDDnutzZigjS' }],
+        [{ address: 'B6PGZSPFGcmFvupqMsgCXCXGxvkocZVckm' }],
         1,
         String(l.getAddress()),
         0xffffffff,
@@ -267,7 +267,7 @@ export default class SelfTest extends Component {
         network: bbluNetwork,
       }).address;
 
-      if (address !== '3GcKN7q7gZuZ8eHygAhHrvPa5zZbG5Q1rK') {
+      if (address !== 'bt4nKcjKAaRKrBWBcsh9SBUE14QnRDwXJY') {
         throw new Error('bip49 is not ok');
       }
 
