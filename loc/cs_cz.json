@@ -152,9 +152,9 @@
     "details_amount_field_is_not_valid": "Částka není správně vyplněna.",
     "details_amount_field_is_less_than_minimum_amount_sat": "Zadaná částka je příliš malá. Zadejte částku vyšší než 500 sat.",
     "details_create": "Vytvořit fakturu",
-    "details_error_decode": "Bitcoinovou adresu nelze dekódovat",
+    "details_error_decode": "Bitcoin-Bluovou adresu nelze dekódovat",
     "details_fee_field_is_not_valid": "Poplatek není správně vyplněn.",
-    "details_frozen": "{amount} BTC je zmrazeno.",
+    "details_frozen": "{amount} BBLU je zmrazeno.",
     "details_next": "Další",
     "details_no_signed_tx": "Vybraný soubor neobsahuje transakci, kterou lze importovat.",
     "details_note_placeholder": "Poznámka pro sebe",
@@ -392,7 +392,7 @@
     "custom_fee_warning_description": "Poplatky ve výši pod 1 sat/vB jsou platné, ale nemusí být vyslány dále do sítě z důvodu zásad uzlu."
   },
   "wallets": {
-    "add_bitcoin": "Bitcoin",
+    "add_bitcoin": "Bitcoin-Blu",
     "add_bitcoin_explain": "Jednoduchá a výkonná bitcoinová peněženka",
     "add_create": "Vytvořit",
     "total_balance": "Celkový zůstatek",
@@ -487,7 +487,7 @@
     "no_results_found": "Nebyly nalezeny žádné výsledky.",
     "please_continue_scanning": "Pokračujte ve skenování.",
     "select_no_bitcoin": "V současné době nejsou k dispozici žádné bitcoinové peněženky.",
-    "select_no_bitcoin_exp": "Bitcoinová peněženka je vyžadována pro doplnění Lightning peněženky. Nějakou prosím vytvořte nebo importujte.",
+    "select_no_bitcoin_exp": "Bitcoin-Bluová peněženka je vyžadována pro doplnění Lightning peněženky. Nějakou prosím vytvořte nebo importujte.",
     "select_wallet": "Vyberte peněženku",
     "xpub_copiedToClipboard": "Zkopírováno do schránky.",
     "pull_to_refresh": "Zatáhněte pro obnovení",
@@ -527,7 +527,7 @@
     "vault_key": "{number}. klíč Úložiště",
     "required_keys_out_of_total": "Požadovaných klíčů z celkového počtu",
     "fee": "Poplatek: {number}",
-    "fee_btc": "{number} BTC",
+    "fee_btc": "{number} BBLU",
     "confirm": "Potvrdit",
     "header": "Odeslat",
     "share": "Sdílet…",
@@ -628,7 +628,7 @@
     "sort_by": "Seřadit podle"
   },
   "units": {
-    "BTC": "BTC",
+    "BBLU": "BBLU",
     "MAX": "Max.",
     "sat_vbyte": "sat/vByte",
     "sats": "sats"

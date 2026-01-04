@@ -142,9 +142,9 @@
 			<key>INIntentClassName</key>
 			<string>PriceView</string>
 			<key>IntentDescription</key>
-			<string>Quickly view the current Bitcoin market rate.</string>
+			<string>Quickly view the current Bitcoin-Blu market rate.</string>
 			<key>IntentName</key>
-			<string>Bitcoin Price</string>
+			<string>Bitcoin-Blu Price</string>
 		</dict>
 	</array>
 	<key>NSAppTransportSecurity</key>
@@ -249,7 +249,7 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Partially Signed Bitcoin Transaction</string>
+			<string>Partially Signed Bitcoin-Blu Transaction</string>
 			<key>UTTypeIdentifier</key>
 			<string>io.bluewallet.psbt</string>
 			<key>UTTypeTagSpecification</key>
@@ -279,7 +279,7 @@
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Bitcoin Transaction</string>
+			<string>Bitcoin-Blu Transaction</string>
 			<key>UTTypeIdentifier</key>
 			<string>io.bluewallet.psbt.txn</string>
 			<key>UTTypeTagSpecification</key>

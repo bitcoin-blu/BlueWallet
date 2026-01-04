@@ -97,7 +97,7 @@ struct PriceView: View {
     let currentPrice = formattedCurrencyString(from: entry.currentMarketData?.rate)
     
     return VStack(alignment: .leading, spacing: 4) {
-      Text("Bitcoin (\(Currency.getUserPreferredCurrency()))")
+      Text("Bitcoin-Blu (\(Currency.getUserPreferredCurrency()))")
         .font(.caption)
         .foregroundColor(.secondary)
       HStack {

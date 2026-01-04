@@ -393,7 +393,7 @@
   },
   "wallets": {
     "add_bitcoin": "ビットコイン",
-    "add_bitcoin_explain": "シンプルかつパワフルなBitcoinウォレット",
+    "add_bitcoin_explain": "シンプルかつパワフルなBitcoin-Bluウォレット",
     "add_create": "作成",
     "total_balance": "合計残高",
     "add_entropy_reset_title": "エントロピーをリセット",
@@ -527,7 +527,7 @@
     "vault_key": "金庫キー {number}",
     "required_keys_out_of_total": "全体のうち必要なキー",
     "fee": "費用: {number}",
-    "fee_btc": "{number} BTC",
+    "fee_btc": "{number} BBLU",
     "confirm": "承認",
     "header": "送る",
     "share": "共有...",
@@ -628,7 +628,7 @@
     "sort_by": "ソート方法"
   },
   "units": {
-    "BTC": "BTC",
+    "BBLU": "BBLU",
     "MAX": "最大",
     "sat_vbyte": "sat/vByte",
     "sats": "sats"
