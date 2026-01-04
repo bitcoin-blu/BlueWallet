@@ -15,6 +15,7 @@ import { scanQrHelper } from '../../helpers/scan-qr.ts';
 import { useExtendedNavigation } from '../../hooks/useExtendedNavigation.ts';
 import SafeAreaScrollView from '../../components/SafeAreaScrollView.tsx';
 import { BlueSpacing10, BlueSpacing20, BlueSpacing40 } from '../../components/BlueSpacing';
+import { BBLU_URI_SCHEME } from '../../blue_modules/bblu-network';
 
 const IsItMyAddress: React.FC = () => {
   const { navigate } = useExtendedNavigation();
@@ -45,7 +46,7 @@ const IsItMyAddress: React.FC = () => {
 
   const checkAddress = () => {
     Keyboard.dismiss();
-    const cleanAddress = address.replace('bitcoin:', '').replace('BITCOIN:', '').replace('bitcoin=', '').split('?')[0];
+    const cleanAddress = address.replace(BBLU_URI_SCHEME + ':', '').replace((BBLU_URI_SCHEME.toUpperCase() + ':'), '').replace(BBLU_URI_SCHEME + '=', '').split('?')[0];
     const matching: TWallet[] = [];
 
     for (const w of wallets) {

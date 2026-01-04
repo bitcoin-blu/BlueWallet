@@ -29,7 +29,7 @@ import useMenuElements from './useMenuElements';
 import { useExtendedNavigation } from './useExtendedNavigation';
 
 const ClipboardContentType = Object.freeze({
-  BITCOIN: 'BITCOIN',
+  BITCOINBLU: 'BITCOINBLU',
   LIGHTNING: 'LIGHTNING',
 });
 
@@ -258,7 +258,7 @@ const useCompanionListeners = (skipIfNotInitialized = true) => {
         ActionSheet.showActionSheetWithOptions(
           {
             title: loc._.clipboard,
-            message: contentType === ClipboardContentType.BITCOIN ? loc.wallets.clipboard_bitcoin : loc.wallets.clipboard_lightning,
+            message: contentType === ClipboardContentType.BITCOINBLU ? loc.wallets.clipboard_bitcoin : loc.wallets.clipboard_lightning,
             options: [loc._.cancel, loc._.continue],
             cancelButtonIndex: 0,
           },
@@ -305,11 +305,11 @@ const useCompanionListeners = (skipIfNotInitialized = true) => {
         ) {
           let contentType;
           if (isBitcoinAddress) {
-            contentType = ClipboardContentType.BITCOIN;
+            contentType = ClipboardContentType.BITCOINBLU;
           } else if (isLightningInvoice || isLNURL) {
             contentType = ClipboardContentType.LIGHTNING;
           } else if (isBothBitcoinAndLightning) {
-            contentType = ClipboardContentType.BITCOIN;
+            contentType = ClipboardContentType.BITCOINBLU;
           }
           showClipboardAlert({ contentType });
         }

@@ -3,6 +3,7 @@ import { sha256 } from '@noble/hashes/sha256';
 import wif from 'wif';
 
 import { BitcoinUnit, Chain } from '../../models/bitcoinUnits';
+import { BBLU_BECH32_PREFIX, BBLU_URI_SCHEME } from '../../blue_modules/bblu-network';
 import { CreateTransactionResult, CreateTransactionUtxo, Transaction, Utxo } from './types';
 import { hexToUint8Array, concatUint8Arrays, uint8ArrayToHex } from '../../blue_modules/uint8array-extras';
 
@@ -224,9 +225,9 @@ export class AbstractWallet {
       }
     }
 
-    this.secret = newSecret.trim().replace('bitcoin:', '').replace('BITCOIN:', '');
+    this.secret = newSecret.trim().replace(BBLU_URI_SCHEME + ':', '').replace((BBLU_URI_SCHEME.toUpperCase() + ':'), '');
 
-    if (this.secret.startsWith('BC1')) this.secret = this.secret.toLowerCase();
+    if (this.secret.startsWith(BBLU_BECH32_PREFIX.toUpperCase())) this.secret = this.secret.toLowerCase();
 
     // is it output descriptor?
     if (
@@ -276,12 +277,12 @@ export class AbstractWallet {
       }
       this.secret = m[2];
 
-      if (derivationPath.startsWith("m/84'/0'/") && this.secret.toLowerCase().startsWith('xpub')) {
+      if (derivationPath.startsWith("m/84'/4353123'/") && this.secret.toLowerCase().startsWith('xpub')) {
         // need to convert xpub to zpub
         this.secret = this._xpubToZpub(this.secret.split('/')[0]);
       }
 
-      if (derivationPath.startsWith("m/49'/0'/") && this.secret.toLowerCase().startsWith('xpub')) {
+      if (derivationPath.startsWith("m/49'/4353123'/") && this.secret.toLowerCase().startsWith('xpub')) {
         // need to convert xpub to ypub
         this.secret = this._xpubToYpub(this.secret);
       }
@@ -335,11 +336,11 @@ export class AbstractWallet {
 
     if (!this._derivationPath) {
       if (this.secret.startsWith('xpub')) {
-        this._derivationPath = "m/44'/0'/0'"; // Assume default BIP44 path for legacy wallets
+        this._derivationPath = "m/44'/4353123'/0'"; // Assume default BIP44 path for legacy wallets
       } else if (this.secret.startsWith('ypub')) {
-        this._derivationPath = "m/49'/0'/0'"; // Assume default BIP49 path for segwit wrapped wallets
+        this._derivationPath = "m/49'/4353123'/0'"; // Assume default BIP49 path for segwit wrapped wallets
       } else if (this.secret.startsWith('zpub')) {
-        this._derivationPath = "m/84'/0'/0'"; // Assume default BIP84 for native segwit wallets
+        this._derivationPath = "m/84'/4353123'/0'"; // Assume default BIP84 for native segwit wallets
       }
     }
 

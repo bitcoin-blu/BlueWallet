@@ -6,6 +6,7 @@ import assert from 'assert';
 import BigNumber from 'bignumber.js';
 import { TOptions } from 'bip21';
 import * as bitcoin from 'bitcoinjs-lib';
+import { BBLU_URI_SCHEME } from '../../blue_modules/bblu-network';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
@@ -413,7 +414,7 @@ const SendDetails = () => {
   /**
    * TODO: refactor this mess, get rid of regexp, use https://github.com/bitcoinjs/bitcoinjs-lib/issues/890 etc etc
    *
-   * @param data {String} Can be address or `bitcoin:xxxxxxx` uri scheme, or invalid garbage
+   * @param data {String} Can be address or `bitcoinblu:xxxxxxx` uri scheme, or invalid garbage
    */
 
   const processAddressData = useCallback(
@@ -433,7 +434,7 @@ const SendDetails = () => {
 
       const cl = new ContactList();
 
-      const dataWithoutSchema = data.replace('bitcoin:', '').replace('BITCOIN:', '');
+      const dataWithoutSchema = data.replace(BBLU_URI_SCHEME + ':', '').replace((BBLU_URI_SCHEME.toUpperCase() + ':'), '');
       if (wallet.isAddressValid(dataWithoutSchema) || cl.isPaymentCodeValid(dataWithoutSchema)) {
         setAddresses(addrs => {
           addrs[scrollIndex.current].address = dataWithoutSchema;
@@ -447,7 +448,7 @@ const SendDetails = () => {
       let address = '';
       let options: TOptions;
       try {
-        if (!data.toLowerCase().startsWith('bitcoin:')) data = `bitcoin:${data}`;
+        if (!data.toLowerCase().startsWith(BBLU_URI_SCHEME + ':')) data = `${BBLU_URI_SCHEME}:${data}`;
         const decoded = DeeplinkSchemaMatch.bip21decode(data);
         address = decoded.address;
         options = decoded.options;

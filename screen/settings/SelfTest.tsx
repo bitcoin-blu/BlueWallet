@@ -2,6 +2,7 @@ import BIP32Factory from 'bip32';
 import bip38 from 'bip38';
 import * as bip39 from 'bip39';
 import * as bitcoin from 'bitcoinjs-lib';
+import { bbluNetwork } from '../../blue_modules/bblu-network';
 import React, { Component } from 'react';
 import { Linking, ScrollView, StyleSheet, View } from 'react-native';
 // @ts-ignore theres no type declaration for this
@@ -256,14 +257,14 @@ export default class SelfTest extends Component {
       const seed = bip39.mnemonicToSeedSync(mnemonic);
       const root = bip32.fromSeed(seed);
 
-      const path = "m/49'/0'/0'/0/0";
+      const path = "m/49'/4353123'/0'/0/0";
       const child = root.derivePath(path);
       const address = bitcoin.payments.p2sh({
         redeem: bitcoin.payments.p2wpkh({
           pubkey: child.publicKey,
-          network: bitcoin.networks.bitcoin,
+          network: bbluNetwork,
         }),
-        network: bitcoin.networks.bitcoin,
+        network: bbluNetwork,
       }).address;
 
       if (address !== '3GcKN7q7gZuZ8eHygAhHrvPa5zZbG5Q1rK') {

@@ -3,6 +3,7 @@ import * as bitcoin from 'bitcoinjs-lib';
 import URL from 'url';
 import { readFileOutsideSandbox } from '../blue_modules/fs';
 import { Chain } from '../models/bitcoinUnits';
+import { BBLU_BECH32_PREFIX, BBLU_URI_SCHEME } from '../blue_modules/bblu-network';
 import { WatchOnlyWallet } from './';
 import Azteco from './azteco';
 import Lnurl from './lnurl';
@@ -16,14 +17,14 @@ type TContext = {
   setSharedCosigner: (cosigner: string) => void;
 };
 
-type TBothBitcoinAndLightning = { bitcoin: string; lndInvoice: string } | undefined;
+type TBothBitcoinAndLightning = { bitcoinblu: string; lndInvoice: string } | undefined;
 
 class DeeplinkSchemaMatch {
   static hasSchema(schemaString: string): boolean {
     if (typeof schemaString !== 'string' || schemaString.length <= 0) return false;
     const lowercaseString = schemaString.trim().toLowerCase();
     return (
-      lowercaseString.startsWith('bitcoin:') ||
+      lowercaseString.startsWith(BBLU_URI_SCHEME + ':') ||
       lowercaseString.startsWith('lightning:') ||
       lowercaseString.startsWith('blue:') ||
       lowercaseString.startsWith('bluewallet:') ||
@@ -36,7 +37,7 @@ class DeeplinkSchemaMatch {
    * If the content is recognizable, create a dictionary with the respective
    * navigation dictionary required by react-navigation
    *
-   * @param event {{url: string}} URL deeplink as passed to app, e.g. `bitcoin:bc1qh6tf004ty7z7un2v5ntu4mkf630545gvhs45u7?amount=666&label=Yo`
+   * @param event {{url: string}} URL deeplink as passed to app, e.g. `bitcoinblu:bb1qh6tf004ty7z7un2v5ntu4mkf630545gvhs45u7?amount=666&label=Yo`
    * @param completionHandler {function} Callback that returns [string, params: object]
    */
   static navigationRouteFor(
@@ -51,7 +52,7 @@ class DeeplinkSchemaMatch {
       return;
     }
 
-    if (event.url.toLowerCase().startsWith('bluewallet:bitcoin:') || event.url.toLowerCase().startsWith('bluewallet:lightning:')) {
+    if (event.url.toLowerCase().startsWith('bluewallet:' + BBLU_URI_SCHEME + ':') || event.url.toLowerCase().startsWith('bluewallet:lightning:')) {
       event.url = event.url.substring(11);
     } else if (event.url.toLocaleLowerCase().startsWith('bluewallet://widget?action=')) {
       event.url = event.url.substring('bluewallet://'.length);
@@ -302,7 +303,7 @@ class DeeplinkSchemaMatch {
   }
 
   static isBitcoinAddress(address: string): boolean {
-    address = address.replace('://', ':').replace('bitcoin:', '').replace('BITCOIN:', '').replace('bitcoin=', '').split('?')[0];
+    address = address.replace('://', ':').replace(BBLU_URI_SCHEME + ':', '').replace((BBLU_URI_SCHEME.toUpperCase() + ':'), '').replace(BBLU_URI_SCHEME + '=', '').split('?')[0];
     let isValidBitcoinAddress = false;
     try {
       bitcoin.address.toOutputScript(address);
@@ -348,15 +349,16 @@ class DeeplinkSchemaMatch {
   }
 
   static isBothBitcoinAndLightning(url: string): TBothBitcoinAndLightning {
-    if (url.includes('lightning') && (url.includes('bitcoin') || url.includes('BITCOIN'))) {
-      const txInfo = url.split(/(bitcoin:\/\/|BITCOIN:\/\/|bitcoin:|BITCOIN:|lightning:|lightning=|bitcoin=)+/);
+    const upperScheme = BBLU_URI_SCHEME.toUpperCase();
+    if (url.includes('lightning') && (url.includes(BBLU_URI_SCHEME) || url.includes(upperScheme))) {
+      const txInfo = url.split(new RegExp(`(${BBLU_URI_SCHEME}://|${upperScheme}://|${BBLU_URI_SCHEME}:|${upperScheme}:|lightning:|lightning=|${BBLU_URI_SCHEME}=)+`));
       let btc: string | false = false;
       let lndInvoice: string | false = false;
       for (const [index, value] of txInfo.entries()) {
         try {
           // Inside try-catch. We dont wan't to  crash in case of an out-of-bounds error.
-          if (value.startsWith('bitcoin') || value.startsWith('BITCOIN')) {
-            btc = `bitcoin:${txInfo[index + 1]}`;
+          if (value.startsWith(BBLU_URI_SCHEME) || value.startsWith(upperScheme)) {
+            btc = `${BBLU_URI_SCHEME}:${txInfo[index + 1]}`;
             if (!DeeplinkSchemaMatch.isBitcoinAddress(btc)) {
               btc = false;
               break;
@@ -375,7 +377,7 @@ class DeeplinkSchemaMatch {
         if (btc && lndInvoice) break;
       }
       if (btc && lndInvoice) {
-        return { bitcoin: btc, lndInvoice };
+        return { bitcoinblu: btc, lndInvoice };
       } else {
         return undefined;
       }
@@ -388,8 +390,9 @@ class DeeplinkSchemaMatch {
       throw new Error('No URI provided');
     }
     let replacedUri = uri;
-    for (const replaceMe of ['BITCOIN://', 'bitcoin://', 'BITCOIN:']) {
-      replacedUri = replacedUri.replace(replaceMe, 'bitcoin:');
+    const upperScheme = BBLU_URI_SCHEME.toUpperCase();
+    for (const replaceMe of [`${upperScheme}://`, `${BBLU_URI_SCHEME}://`, `${upperScheme}:`]) {
+      replacedUri = replacedUri.replace(replaceMe, BBLU_URI_SCHEME + ':');
     }
 
     return bip21.decode(replacedUri);
@@ -397,7 +400,7 @@ class DeeplinkSchemaMatch {
 
   static bip21encode(address: string, options?: TOptions): string {
     // uppercase address if bech32 to satisfy BIP_0173
-    const isBech32 = address.startsWith('bc1');
+    const isBech32 = address.startsWith(BBLU_BECH32_PREFIX);
     if (isBech32) {
       address = address.toUpperCase();
     }

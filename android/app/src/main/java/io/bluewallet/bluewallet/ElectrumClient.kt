@@ -1,4 +1,4 @@
-package io.bluewallet.bluewallet
+package io.bitcoinblu.bitcoinblu
 
 import android.content.Context
 import android.util.Log
@@ -29,12 +29,8 @@ class ElectrumClient {
         
         // Default list of Electrum servers to try
         val hardcodedPeers = listOf(
-            ElectrumServer("electrum1.bluewallet.io", 50001, false),
-            ElectrumServer("electrum2.bluewallet.io", 50001, false),
-            ElectrumServer("electrum3.bluewallet.io", 50001, false),
-            ElectrumServer("electrum1.bluewallet.io", 443, true),
-            ElectrumServer("electrum2.bluewallet.io", 443, true),
-            ElectrumServer("electrum3.bluewallet.io", 443, true)
+            ElectrumServer("electrumx.bitcoin-blu.org", 50001, false),
+            ElectrumServer("electrumx.bitcoin-blu.org", 50002, true)
         )
     }
 

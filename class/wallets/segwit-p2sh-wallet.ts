@@ -3,6 +3,7 @@ import { CoinSelectTarget } from 'coinselect';
 import { ECPairFactory } from 'ecpair';
 
 import ecc from '../../blue_modules/noble_ecc';
+import { bbluNetwork } from '../../blue_modules/bblu-network';
 import { LegacyWallet } from './legacy-wallet';
 import { CreateTransactionResult, CreateTransactionUtxo } from './types';
 import { hexToUint8Array } from '../../blue_modules/uint8array-extras';
@@ -17,7 +18,8 @@ const ECPair = ECPairFactory(ecc);
  */
 function pubkeyToP2shSegwitAddress(pubkey: Uint8Array): string | false {
   const { address } = bitcoin.payments.p2sh({
-    redeem: bitcoin.payments.p2wpkh({ pubkey }),
+    redeem: bitcoin.payments.p2wpkh({ pubkey, network: bbluNetwork }),
+    network: bbluNetwork,
   });
   return address ?? false;
 }
@@ -52,7 +54,7 @@ export class SegwitP2SHWallet extends LegacyWallet {
       return (
         bitcoin.payments.p2sh({
           output: scriptPubKey2,
-          network: bitcoin.networks.bitcoin,
+          network: bbluNetwork,
         }).address ?? false
       );
     } catch (_) {
@@ -112,8 +114,8 @@ export class SegwitP2SHWallet extends LegacyWallet {
       c++;
 
       const pubkey = keyPair.publicKey;
-      const p2wpkh = bitcoin.payments.p2wpkh({ pubkey });
-      const p2sh = bitcoin.payments.p2sh({ redeem: p2wpkh });
+      const p2wpkh = bitcoin.payments.p2wpkh({ pubkey, network: bbluNetwork });
+      const p2sh = bitcoin.payments.p2sh({ redeem: p2wpkh, network: bbluNetwork });
       if (!p2sh.output) {
         throw new Error('Internal error: no p2sh.output during createTransaction()');
       }

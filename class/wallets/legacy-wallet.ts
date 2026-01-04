@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js';
 import * as bitcoin from 'bitcoinjs-lib';
+import { bbluNetwork, BBLU_BECH32_PREFIX } from '../../blue_modules/bblu-network';
 import bitcoinMessage from 'bitcoinjs-message';
 import coinSelect, { CoinSelectOutput, CoinSelectReturnInput, CoinSelectTarget } from 'coinselect';
 import coinSelectSplit from 'coinselect/split';
@@ -404,7 +405,7 @@ export class LegacyWallet extends AbstractWallet {
     }
 
     for (const t of _targets) {
-      if (t.address?.startsWith('bc1')) {
+      if (t.address?.startsWith(BBLU_BECH32_PREFIX)) {
         // in case address is non-typical and takes more bytes than coinselect library anticipates by default
         t.script = { length: bitcoin.address.toOutputScript(t.address).length + 3 };
       }
@@ -528,7 +529,7 @@ export class LegacyWallet extends AbstractWallet {
     try {
       bitcoin.address.toOutputScript(address); // throws, no?
 
-      if (!address.toLowerCase().startsWith('bc1')) return true;
+      if (!address.toLowerCase().startsWith(BBLU_BECH32_PREFIX)) return true;
       const decoded = bitcoin.address.fromBech32(address);
       if (decoded.version === 0) return true;
       if (decoded.version === 1 && decoded.data.length !== 32) return false;
@@ -553,7 +554,7 @@ export class LegacyWallet extends AbstractWallet {
       return (
         bitcoin.payments.p2pkh({
           output: scriptPubKey2,
-          network: bitcoin.networks.bitcoin,
+          network: bbluNetwork,
         }).address ?? false
       );
     } catch (_) {

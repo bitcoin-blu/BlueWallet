@@ -4,6 +4,7 @@ import { Text } from '@rneui/themed';
 import { PayjoinClient } from 'payjoin-client';
 import BigNumber from 'bignumber.js';
 import * as bitcoin from 'bitcoinjs-lib';
+import { bbluNetwork } from '../../blue_modules/bblu-network';
 import { BlueText, BlueCard } from '../../BlueComponents';
 import { BitcoinUnit } from '../../models/bitcoinUnits';
 import loc, { formatBalance, formatBalanceWithoutSuffix } from '../../loc';
@@ -168,7 +169,7 @@ const Confirm: React.FC = () => {
     if (!(recipients.length > 0) || !recipients[0].address) {
       return undefined;
     }
-    return bitcoin.address.toOutputScript(recipients[0].address, bitcoin.networks.bitcoin);
+    return bitcoin.address.toOutputScript(recipients[0].address, bbluNetwork);
   };
 
   const handleSendTransaction = async () => {

@@ -69,7 +69,7 @@ export class LightningArkWallet extends LightningCustodianWallet {
       const internal = 0;
       const accountNumber = 0;
       const root = bip32.fromSeed(seed);
-      const path = `m/86'/0'/${accountNumber}'/${internal}/${index}`;
+      const path = `m/86'/4353123'/${accountNumber}'/${internal}/${index}`;
       const child = root.derivePath(path);
       assert(child.privateKey, 'Internal error: no private key for child');
 

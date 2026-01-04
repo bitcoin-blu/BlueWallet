@@ -41,7 +41,7 @@ const ImportCustomDerivationPath: React.FC = () => {
   const { colors } = useTheme();
   const { importText, password } = useRoute<RouteProps>().params;
   const { addAndSaveWallet } = useStorage();
-  const [path, setPath] = useState<string>("m/84'/0'/0'");
+  const [path, setPath] = useState<string>("m/84'/4353123'/0'");
   const [wallets, setWallets] = useState<TWalletsByPath>({});
   const [used, setUsed] = useState<TUsedByPath>({});
   const [selected, setSelected] = useState<string>('');

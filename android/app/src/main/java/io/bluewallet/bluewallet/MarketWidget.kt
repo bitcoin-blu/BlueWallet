@@ -1,4 +1,4 @@
-package io.bluewallet.bluewallet
+package io.bitcoinblu.bitcoinblu
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -13,21 +13,18 @@ import androidx.work.WorkManager
 import kotlinx.coroutines.delay
 import org.json.JSONObject
 import java.util.concurrent.TimeUnit
-import io.bluewallet.bluewallet.ElectrumClient.ElectrumServer
+import io.bitcoinblu.bitcoinblu.ElectrumClient.ElectrumServer
 
 class MarketWidget : AppWidgetProvider() {
 
     companion object {
         private const val TAG = "MarketWidget"
-        private const val SHARED_PREF_NAME = "group.io.bluewallet.bluewallet"
+        private const val SHARED_PREF_NAME = "group.io.bitcoinblu.bitcoinblu"
         private const val DEFAULT_CURRENCY = "USD"
         private const val KEY_LAST_ONLINE_STATUS = "market_widget_last_online_status"
 
         private val hardcodedPeers = listOf(
-            ElectrumServer("mainnet.foundationdevices.com", 50002, true),
-            ElectrumServer("electrum1.bluewallet.io", 443, true),
-            ElectrumServer("electrum.acinq.co", 50002, true),
-            ElectrumServer("electrum.bitaroo.net", 50002, true)
+            ElectrumServer("electrumx.bitcoin-blu.org", 50002, true)
         )
 
         private suspend fun connectToElectrumServer(): Boolean {
